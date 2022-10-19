@@ -29,23 +29,23 @@ class WorkersController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-
+    function getCategory($salary)
+    {
+        $categorias = ['A', 'B', 'C'];
+        if ($salary < 7000) {
+            return $categorias[0];
+        }
+        if ($salary >= 7000 && $salary < 12000) {
+            return $categorias[1];
+        }
+        if ($salary > 12000) {
+            return $categorias[2];
+        }
+    }
 
     public function store(Request $request)
     {
-        function getCategory($salary)
-        {
-            $categorias = ['A', 'B', 'C'];
-            if ($salary < 7000) {
-                return $categorias[0];
-            }
-            if ($salary >= 7000 && $salary < 12000) {
-                return $categorias[1];
-            }
-            if ($salary > 12000) {
-                return $categorias[2];
-            }
-        }
+
 
         $workers = new workers();
         $workers->name = $request->name;
@@ -55,7 +55,7 @@ class WorkersController extends Controller
         $workers->salary = $request->salary;
         $salaryt = $workers->salary * 0.84;
         $workers->salary_taxes = $salaryt;
-        $workers->category = getCategory($salaryt);
+        $workers->category = $this->getCategory($salaryt);
         $workers->save();
         return [
             "status" => true,
@@ -90,26 +90,14 @@ class WorkersController extends Controller
      */
     public function update(Request $request, workers $workers)
     {
-        function getCategoryU($salary)
-        {
-            $categorias = ['A', 'B', 'C'];
-            if ($salary < 7000) {
-                return $categorias[0];
-            }
-            if ($salary >= 7000 && $salary < 12000) {
-                return $categorias[1];
-            }
-            if ($salary > 12000) {
-                return $categorias[2];
-            }
-        }
+
         $workers->name = $request->name;
         $workers->last_name = $request->last_name;
         $workers->email = $request->email;
         $workers->salary = $request->salary;
         $salaryt = $workers->salary * 0.84;
         $workers->salary_taxes = $salaryt;
-        $workers->category = getCategoryU($salaryt);
+        $workers->category = $this->getCategoryU($salaryt);
         $workers->update();
         return [
             "status" => true,
