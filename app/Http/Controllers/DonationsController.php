@@ -45,8 +45,14 @@ class DonationsController extends Controller
         $donation = new Donations();
         $donation->reference = $this->createReference();
         $donation->amount = $request->amount;
-        $donation->amount_paid = 0;
+        $donation->amount_paid = 0.0;
         $donation->payment_status = 'pending';
+        $donation->save();
+        return [
+            "status" => true,
+            "message" => "Donation register",
+            "data" => $donation
+        ];
     }
 
     /**

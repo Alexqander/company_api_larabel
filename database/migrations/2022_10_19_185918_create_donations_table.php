@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('reference');
             $table->string('amount');
             $table->float('amount_paid');
-            $table->float('payment_status');
+            $table->string('payment_status');
             $table->timestamps();
         });
     }
