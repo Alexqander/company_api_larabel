@@ -22,6 +22,14 @@ class DonationsController extends Controller
         ];
     }
 
+    function compare_donation($don, $pay)
+    {
+        if ($don != $pay) {
+            return 'WRONG';
+        } else {
+            return 'SUCCESFUL';
+        }
+    }
     function createReference()
     {
         date_default_timezone_set('America/Mexico_City');
@@ -82,7 +90,7 @@ class DonationsController extends Controller
     {
         $donation->amount = $request->amount;
         $donation->amount_paid = $request->amount_paid;
-        $donation->payment_status = $request->payment_status;
+        $donation->payment_status = $this->compare_donation($donation->amount, $donation->amount_paid);
         $donation->update();
         return [
             "status" => true,

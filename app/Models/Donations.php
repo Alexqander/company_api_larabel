@@ -16,4 +16,9 @@ class Donations extends Model
         'payment_status',
     ];
     use HasFactory;
+
+    public function findDonationsById($id)
+    {
+        return Donations::find($id);
+    }
 }
